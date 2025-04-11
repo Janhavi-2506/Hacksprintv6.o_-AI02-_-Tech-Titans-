@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Upload Your Resume</h1>
+    <form action="/analyze" method="post" enctype="multipart/form-data">
+        <input type="file" name="resume" required>
+        <button type="submit">Analyze</button>
+    </form>
+</body>
+</html>
