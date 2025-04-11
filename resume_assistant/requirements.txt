@@ -1,3 +1,0 @@
-Flask
-docx2txt
-PyMuPDF
