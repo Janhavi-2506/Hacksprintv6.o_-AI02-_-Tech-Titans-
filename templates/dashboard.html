@@ -1,0 +1,120 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h1>
+        <a href="{{ url_for('new_job') }}" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-1"></i> Create New Job
+        </a>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-dark border-primary mb-3">
+                <div class="card-body d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-briefcase fs-1 text-primary"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title">Total Job Postings</h5>
+                        <p class="card-text fs-2">{{ job_stats|length }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-dark border-success mb-3">
+                <div class="card-body d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-users fs-1 text-success"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title">Total Candidates</h5>
+                        <p class="card-text fs-2">{{ job_stats|map(attribute='total')|sum }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-dark border-info mb-3">
+                <div class="card-body d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle fs-1 text-info"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title">Shortlisted</h5>
+                        <p class="card-text fs-2">{{ job_stats|map(attribute='shortlisted')|sum }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h2 class="mb-3"><i class="fas fa-briefcase me-2"></i>Your Job Postings</h2>
+    
+    {% if job_stats %}
+        <div class="row">
+            {% for job_stat in job_stats %}
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-dark border-secondary h-100">
+                        <div class="card-header bg-dark d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 text-primary">{{ job_stat.job.title }}</h5>
+                            <div>
+                                <a href="{{ url_for('edit_job', job_id=job_stat.job.id) }}" class="btn btn-sm btn-outline-secondary me-1" title="Edit Job">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <span class="badge bg-secondary me-2"><i class="fas fa-map-marker-alt me-1"></i>{{ job_stat.job.location or 'Remote' }}</span>
+                                <span class="badge bg-secondary"><i class="fas fa-calendar me-1"></i>Posted: {{ job_stat.job.created_at.strftime('%Y-%m-%d') }}</span>
+                            </div>
+                            
+                            <p class="card-text">{{ job_stat.job.description[:150] }}{% if job_stat.job.description|length > 150 %}...{% endif %}</p>
+                            
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar bg-success" style="width: {{ (job_stat.shortlisted / job_stat.total * 100) if job_stat.total > 0 else 0 }}%"></div>
+                                <div class="progress-bar bg-info" style="width: {{ (job_stat.reviewing / job_stat.total * 100) if job_stat.total > 0 else 0 }}%"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <small class="text-muted">Total Candidates: <span class="fw-bold">{{ job_stat.total }}</span></small>
+                                </div>
+                                <div>
+                                    <small class="text-info me-2">Reviewing: <span class="fw-bold">{{ job_stat.reviewing }}</span></small>
+                                    <small class="text-success">Shortlisted: <span class="fw-bold">{{ job_stat.shortlisted }}</span></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-dark d-flex justify-content-between">
+                            <a href="{{ url_for('view_candidates', job_id=job_stat.job.id) }}" class="btn btn-outline-primary">
+                                <i class="fas fa-users me-1"></i> View Candidates
+                            </a>
+                            <a href="{{ url_for('upload_resume', job_id=job_stat.job.id) }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-upload me-1"></i> Upload Resume
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card bg-dark border-secondary">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-briefcase fs-1 text-secondary mb-3"></i>
+                <h4>No Job Postings Yet</h4>
+                <p class="text-muted">Create your first job posting to start screening resumes.</p>
+                <a href="{{ url_for('new_job') }}" class="btn btn-primary">
+                    <i class="fas fa-plus-circle me-1"></i> Create New Job
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
