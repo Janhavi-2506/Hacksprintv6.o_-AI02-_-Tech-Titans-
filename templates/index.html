@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+<!-- Additional head content for homepage -->
+<style>
+    /* Additional styles to ensure content appears */
+    .homepage-content {
+        background-color: #212529;
+        color: #f8f9fa;
+        padding: 2rem 0;
+        visibility: visible !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container homepage-content">
+    <div class="row align-items-center my-5">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold">Resume Screening Assistant</h1>
+            <p class="lead">Streamline your recruitment process with AI-powered resume screening</p>
+            <p class="mb-4">Our tool helps recruiters efficiently analyze, score, and match candidate resumes against job requirements, saving you time and helping you find the best talent.</p>
+            
+            {% if not current_user.is_authenticated %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4 me-md-2">Get Started</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-4">Login</a>
+            </div>
+            {% else %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg px-4 me-md-2">Go to Dashboard</a>
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-lg-6 d-flex justify-content-center">
+            <div class="text-center">
+                <svg width="400" height="300" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Resume Icon -->
+                    <rect x="150" y="80" width="300" height="400" rx="15" fill="#2A3036" stroke="#6c757d" stroke-width="3"/>
+                    <line x1="180" y1="130" x2="420" y2="130" stroke="#6c757d" stroke-width="3"/>
+                    <line x1="180" y1="170" x2="420" y2="170" stroke="#6c757d" stroke-width="3"/>
+                    <line x1="180" y1="210" x2="420" y2="210" stroke="#6c757d" stroke-width="3"/>
+                    <line x1="180" y1="250" x2="380" y2="250" stroke="#6c757d" stroke-width="3"/>
+                    <line x1="180" y1="290" x2="380" y2="290" stroke="#6c757d" stroke-width="3"/>
+                    <line x1="180" y1="330" x2="300" y2="330" stroke="#6c757d" stroke-width="3"/>
+                    
+                    <!-- Magnifying Glass -->
+                    <circle cx="400" cy="120" r="70" fill="none" stroke="#0d6efd" stroke-width="10" opacity="0.7"/>
+                    <line x1="450" y1="170" x2="500" y2="220" stroke="#0d6efd" stroke-width="10" stroke-linecap="round" opacity="0.7"/>
+                    
+                    <!-- Checkmark -->
+                    <circle cx="400" cy="350" r="40" fill="#198754" opacity="0.8"/>
+                    <path d="M380,350 L395,365 L420,335" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    
+    <hr class="my-5">
+    
+    <div class="row g-4 py-5">
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark border-secondary">
+                <div class="card-body">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2 rounded">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <h3 class="card-title">Resume Processing</h3>
+                    <p class="card-text">Upload and automatically process candidate resumes in PDF or DOCX format. Our system extracts key information including skills, education, and experience.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark border-secondary">
+                <div class="card-body">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2 rounded">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="card-title">Match Analysis</h3>
+                    <p class="card-text">Our intelligent algorithm scores and ranks candidates based on how well their qualifications match your job requirements, helping you identify the best candidates quickly.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark border-secondary">
+                <div class="card-body">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2 rounded">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3 class="card-title">Candidate Management</h3>
+                    <p class="card-text">Easily manage your candidate pipeline with our intuitive dashboard. Add notes, update statuses, and keep track of your recruitment process from start to finish.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
