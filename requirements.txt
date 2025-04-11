@@ -1,0 +1,11 @@
+docx2txt
+email-validator
+flask
+flask-login
+flask-sqlalchemy
+gunicorn
+psycopg2-binary
+pypdf2
+spacy
+sqlalchemy
+werkzeug
