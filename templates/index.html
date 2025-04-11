@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Screening Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>AI-Powered Resume Screening</h1>
+        <form action="/process" method="POST" enctype="multipart/form-data">
+            <label>Upload Resumes (PDF or DOCX):</label>
+            <input type="file" name="resumes" multiple required><br><br>
+
+            <label>Paste Job Description:</label><br>
+            <textarea name="job_description" rows="8" cols="60" required></textarea><br><br>
+
+            <button type="submit">Analyze</button>
+        </form>
+    </div>
+</body>
+</html>
