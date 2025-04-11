@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Screening Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Resume Screening Assistant</h1>
+            <p>Upload your resume to get AI-powered feedback and improvement suggestions</p>
+        </header>
+        
+        <div class="upload-container">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="upload-area" id="dropZone">
+                    <input type="file" id="fileInput" name="resume" accept=".pdf,.docx" required>
+                    <label for="fileInput" class="upload-label">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3580/3580380.png" alt="Upload icon" class="upload-icon">
+                        <h3>Drag & Drop your resume here</h3>
+                        <p>or click to browse files (PDF or DOCX)</p>
+                    </label>
+                </div>
+                
+                <div class="job-description">
+                    <label for="jobDesc">Job Description (Optional for matching)</label>
+                    <textarea id="jobDesc" name="job_description" rows="4" placeholder="Paste the job description here to get matching score..."></textarea>
+                </div>
+                
+                <button type="submit" class="analyze-btn">Analyze Resume</button>
+            </form>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <h3>Resume Health Score</h3>
+                <p>Get your resume rated on ATS compatibility and structure</p>
+            </div>
+            <div class="feature-card">
+                <h3>Bias Detection</h3>
+                <p>Identify potentially biased language in your resume</p>
+            </div>
+            <div class="feature-card">
+                <h3>Fraud Detection</h3>
+                <p>Detect inconsistencies and exaggerated claims</p>
+            </div>
+            <div class="feature-card">
+                <h3>Personality Insights</h3>
+                <p>Discover your professional personality traits</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Drag and drop functionality
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                updateFileName();
+            }
+        });
+        
+        fileInput.addEventListener('change', updateFileName);
+        
+        function updateFileName() {
+            if (fileInput.files.length) {
+                const fileName = fileInput.files[0].name;
+                const label = dropZone.querySelector('p');
+                label.textContent = fileName;
+                label.style.color = '#2ecc71';
+            }
+        }
+    </script>
+</body>
+</html>
