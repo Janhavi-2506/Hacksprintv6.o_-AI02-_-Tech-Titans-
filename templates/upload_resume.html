@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+
+{% block title %}Upload Resume{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card bg-dark border-secondary">
+                <div class="card-header bg-dark">
+                    <h2 class="mb-0"><i class="fas fa-upload me-2"></i>Upload Resume</h2>
+                </div>
+                <div class="card-body">
+                    {% if job %}
+                        <div class="alert alert-info">
+                            <h5 class="alert-heading"><i class="fas fa-briefcase me-2"></i>{{ job.title }}</h5>
+                            <p class="mb-0">Uploading resume for this job posting.</p>
+                        </div>
+                        
+                        <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Candidate Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                                <div class="invalid-feedback">
+                                    Please enter the candidate's name.
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Candidate Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address.
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Candidate Phone</label>
+                                <input type="tel" class="form-control" id="phone" name="phone">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="resume" class="form-label">Resume File <span class="text-danger">*</span></label>
+                                <input type="file" class="form-control" id="resume" name="resume" accept=".pdf,.docx" required>
+                                <div class="form-text">Accepted formats: PDF, DOCX (Max 16MB)</div>
+                                <div class="invalid-feedback">
+                                    Please select a resume file.
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-4">
+                                {% if job %}
+                                    <a href="{{ url_for('view_candidates', job_id=job.id) }}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-arrow-left me-1"></i> Back to Candidates
+                                    </a>
+                                {% else %}
+                                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                                    </a>
+                                {% endif %}
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-upload me-1"></i> Upload & Process
+                                </button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="job_id" class="form-label">Select Job Posting <span class="text-danger">*</span></label>
+                                <select class="form-select" id="job_id" name="job_id" required>
+                                    <option value="" selected disabled>Choose a job posting...</option>
+                                    {% for job in job_postings %}
+                                        <option value="{{ job.id }}">{{ job.title }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a job posting.
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="resume" class="form-label">Resume File <span class="text-danger">*</span></label>
+                                <input type="file" class="form-control" id="resume" name="resume" accept=".pdf,.docx" required>
+                                <div class="form-text">Accepted formats: PDF, DOCX (Max 16MB)</div>
+                                <div class="invalid-feedback">
+                                    Please select a resume file.
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-4">
+                                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-arrow-right me-1"></i> Continue
+                                </button>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card bg-dark border-secondary mt-4">
+                <div class="card-header bg-dark">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>How Resume Processing Works</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2 rounded">
+                                <i class="fas fa-file-import"></i>
+                            </div>
+                            <h5>1. Extract Text</h5>
+                            <p class="small">We extract raw text from PDF or DOCX files.</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2 rounded">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h5>2. Analyze Content</h5>
+                            <p class="small">AI identifies skills, education, and experience.</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2 rounded">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <h5>3. Calculate Match</h5>
+                            <p class="small">Compare to job requirements for a match score.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
