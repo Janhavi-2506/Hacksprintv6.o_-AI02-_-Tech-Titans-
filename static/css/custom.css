@@ -1,0 +1,63 @@
+/* Custom CSS for Resume Screening Assistant */
+
+/* Primary color adjustments */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --info-color: #0dcaf0;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+}
+
+/* Body and general styling */
+body {
+    min-height: 100vh;
+    display: block !important; /* Force display block */
+    background-color: #212529 !important;
+    color: #f8f9fa !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+main {
+    flex: 1;
+}
+
+/* Card hover effects */
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Resume content styling */
+pre {
+    font-family: inherit;
+    background-color: transparent;
+    margin: 0;
+}
+
+/* Custom styling for badges */
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.8em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .row > [class*='col-'] {
+        margin-bottom: 1.5rem;
+    }
+    
+    .row > [class*='col-']:last-child {
+        margin-bottom: 0;
+    }
+}
